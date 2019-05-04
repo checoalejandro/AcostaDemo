@@ -1,6 +1,8 @@
 package com.acostadev.acostademo.main
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -33,11 +35,25 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) viewModel
 
-        binding.content.btnFind.setOnClickListener {
-            identifyLanguage()
-        }
+        setLanguageDetector()
 
         setObservers()
+    }
+
+    private fun setLanguageDetector() {
+        binding.content.textInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                identifyLanguage()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.languageIdentificationLiveData.observe(this, Observer {
             if (it == null) return@Observer
 
-            Snackbar.make(binding.coordinatorMain, getString(R.string.main_language_result, LocaleUtils.getDisplayName(it)), Snackbar.LENGTH_LONG).show()
+            binding.content.txtResult.text =  LocaleUtils.getDisplayName(it)
         })
     }
 
@@ -68,7 +84,8 @@ class MainActivity : AppCompatActivity() {
         hideKeyboard()
         val text = binding.content.textInput.text.toString()
         if (text.isEmpty()) {
-            binding.content.textInput.error = "Can't be empty"
+            binding.content.txtResult.text = ""
+            return
         } else {
             binding.content.textInput.error = null
             viewModel.identifyLanguage(text)
