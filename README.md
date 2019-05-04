@@ -9,4 +9,4 @@ This repo contains implementations for practice and latest tools for Android suc
 * ML Kit
 * More comming...
 # Authors
-* **Alex Acosta** [Email me](mailto:checoalejandro@gmail.com)
+* **Alex Acosta** - [(email me)](mailto:checoalejandro@gmail.com)
