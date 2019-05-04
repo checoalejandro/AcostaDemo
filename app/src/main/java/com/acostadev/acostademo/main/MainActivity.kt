@@ -3,30 +3,26 @@ package com.acostadev.acostademo.main
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.acostadev.acostademo.R
+import com.acostadev.acostademo.adapters.FirebaseDatabaseAdapter
 import com.acostadev.acostademo.databinding.ActivityMainBinding
-import com.acostadev.acostademo.di.ViewModelFactory
 import com.acostadev.acostademo.di.injector
-import com.acostadev.acostademo.hideKeyboard
+import com.acostadev.acostademo.models.TextProfile
 import com.acostadev.acostademo.utils.LocaleUtils
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(this, injector.mainViewModelFactory()).get(MainViewModel::class.java)
     }
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) viewModel
 
-        setLanguageDetector()
-
         setObservers()
+        setLanguageDetector()
+        viewModel.getProfiles()
     }
 
     private fun setLanguageDetector() {
@@ -54,6 +50,11 @@ class MainActivity : AppCompatActivity() {
                 identifyLanguage()
             }
         })
+    }
+
+    private fun setRealtimeDatabase(profiles: List<TextProfile>) {
+        binding.content.rvDatabase.layoutManager = LinearLayoutManager(this)
+        binding.content.rvDatabase.adapter = FirebaseDatabaseAdapter(profiles)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -75,8 +76,11 @@ class MainActivity : AppCompatActivity() {
     private fun setObservers() {
         viewModel.languageIdentificationLiveData.observe(this, Observer {
             if (it == null) return@Observer
-
-            binding.content.txtResult.text =  LocaleUtils.getDisplayName(it)
+            binding.content.txtResult.text = LocaleUtils.getDisplayName(it)
+        })
+        viewModel.profilesLiveData.observe(this, Observer { profiles ->
+            if (profiles == null) return@Observer
+            setRealtimeDatabase(profiles)
         })
     }
 

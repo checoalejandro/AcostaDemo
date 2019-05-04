@@ -41,6 +41,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-natural-language:18.2.0'
     implementation 'com.google.firebase:firebase-ml-natural-language-language-id-model:18.0.3'
 
+    // Firebase DB
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+
     // Dagger
     implementation 'com.google.dagger:dagger:2.20'
     kapt 'com.google.dagger:dagger-compiler:2.20'
