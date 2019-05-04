@@ -5,4 +5,5 @@
     <!-- Main -->
     <string name="main_title">Firebase Playground</string>
     <string name="main_language_result">Result: %s</string>
+    <string name="main_language_hint">Type any text here</string>
 </resources>

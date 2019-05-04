@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "845294170821-lpqjvrgnrfm7ec1skctkghiqgrlugpfv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.acostadev.acostademo",
+            "certificate_hash": "27e91301f8598eab21166b851b81e7a7e094a829"
+          }
+        },
+        {
           "client_id": "845294170821-hur8t710o06qjeufqg102e96v42roeic.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -81,7 +81,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun identifyLanguage() {
-        hideKeyboard()
         val text = binding.content.textInput.text.toString()
         if (text.isEmpty()) {
             binding.content.txtResult.text = ""

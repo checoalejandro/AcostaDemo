@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#FF9800</color>
     <color name="colorAccent">#3F51B5</color>
 
+    <!-- Button -->
+    <color name="buttonCorners">#5F5F5F</color>
+
     <!-- Text -->
     <color name="primaryButtonFill">@color/colorAccent</color>
     <color name="primaryButtonText">#FFF</color>

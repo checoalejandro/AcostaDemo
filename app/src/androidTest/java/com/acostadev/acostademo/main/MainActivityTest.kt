@@ -41,7 +41,7 @@ class MainActivityTest {
                                 0),
                         isDisplayed()))
         appCompatEditText.perform(replaceText("This is an example with one language"), closeSoftKeyboard())
-
+        Thread.sleep(1000)
         val textView = onView(
                 allOf(withId(R.id.txtResult), withText("English"),
                         childAtPosition(
@@ -50,8 +50,31 @@ class MainActivityTest {
                                         0),
                                 2),
                         isDisplayed()))
-        Thread.sleep(1000)
+
         textView.check(matches(withText("English")))
+    }
+
+    @Test
+    fun spanishLanguageDetection() {
+        val appCompatEditText = onView(
+                allOf(withId(R.id.textInput),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(`is`("androidx.cardview.widget.CardView")),
+                                        0),
+                                0),
+                        isDisplayed()))
+        appCompatEditText.perform(replaceText("Este es un ejemplo de otro idioma."), closeSoftKeyboard())
+        Thread.sleep(1000)
+        val textView = onView(
+                allOf(withId(R.id.txtResult), withText("Spanish"),
+                        childAtPosition(
+                                childAtPosition(
+                                        IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java),
+                                        0),
+                                2),
+                        isDisplayed()))
+        textView.check(matches(withText("Spanish")))
     }
 
     private fun childAtPosition(
