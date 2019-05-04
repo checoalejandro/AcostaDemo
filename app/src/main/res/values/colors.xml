@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFC107</color>
+    <color name="colorPrimaryDark">#FF9800</color>
+    <color name="colorAccent">#3F51B5</color>
+
+    <!-- Text -->
+    <color name="primaryButtonFill">@color/colorAccent</color>
+    <color name="primaryButtonText">#FFF</color>
+    <color name="primaryText">#1D1D1D</color>
+    <color name="secondaryText">#444444</color>
+
+    <!-- Background -->
+    <color name="mainBackground">#ECECEC</color>
+    <color name="cardBackground">#FFF</color>
+</resources>

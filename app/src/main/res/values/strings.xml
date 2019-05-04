@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AcostaDemo</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Main -->
+    <string name="main_title">Firebase Playground</string>
+    <string name="main_language_result">Result: %s</string>
+</resources>
