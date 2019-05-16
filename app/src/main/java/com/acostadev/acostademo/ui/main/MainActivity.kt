@@ -1,5 +1,6 @@
-package com.acostadev.acostademo.main
+package com.acostadev.acostademo.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import com.acostadev.acostademo.adapters.FirebaseDatabaseAdapter
 import com.acostadev.acostademo.databinding.ActivityMainBinding
 import com.acostadev.acostademo.di.injector
 import com.acostadev.acostademo.models.TextProfile
+import com.acostadev.acostademo.ui.settings.SettingsActivity
 import com.acostadev.acostademo.utils.LocaleUtils
 
 class MainActivity : AppCompatActivity() {
@@ -68,7 +70,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

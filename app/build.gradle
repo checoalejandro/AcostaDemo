@@ -46,6 +46,7 @@ dependencies {
 
     // Dagger
     implementation 'com.google.dagger:dagger:2.20'
+    implementation 'androidx.preference:preference:1.1.0-alpha04'
     kapt 'com.google.dagger:dagger-compiler:2.20'
 
     // Retrofit

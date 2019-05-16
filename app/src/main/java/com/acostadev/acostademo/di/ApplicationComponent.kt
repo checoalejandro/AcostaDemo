@@ -1,7 +1,7 @@
 package com.acostadev.acostademo.di
 
 import android.content.Context
-import com.acostadev.acostademo.main.MainViewModel
+import com.acostadev.acostademo.ui.main.MainViewModel
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
