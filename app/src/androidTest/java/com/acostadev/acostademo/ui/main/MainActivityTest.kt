@@ -1,4 +1,4 @@
-package com.acostadev.acostademo.main
+package com.acostadev.acostademo.ui.main
 
 
 import android.view.View

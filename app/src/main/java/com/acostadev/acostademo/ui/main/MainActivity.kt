@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setObservers()
         setLanguageDetector()
         viewModel.getProfiles()
+        viewModel.doLongTask()
     }
 
     private fun setLanguageDetector() {
