@@ -16,6 +16,7 @@ import com.acostadev.acostademo.adapters.FirebaseDatabaseAdapter
 import com.acostadev.acostademo.databinding.ActivityMainBinding
 import com.acostadev.acostademo.di.injector
 import com.acostadev.acostademo.models.TextProfile
+import com.acostadev.acostademo.ui.livepreview.LivePreviewActivity
 import com.acostadev.acostademo.ui.settings.SettingsActivity
 import com.acostadev.acostademo.utils.LocaleUtils
 
@@ -34,9 +35,15 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) viewModel
 
         setObservers()
+        setListeners()
         setLanguageDetector()
-        viewModel.getProfiles()
+//        viewModel.getProfiles()
         viewModel.doLongTask()
+    }
+
+    private fun setListeners() {
+        binding.content.objectTrackingButton.setOnClickListener {
+            startActivity(Intent(this, LivePreviewActivity::class.java)) }
     }
 
     private fun setLanguageDetector() {

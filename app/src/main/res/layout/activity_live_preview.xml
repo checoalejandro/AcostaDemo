@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fireTopLayout"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.livepreview.LivePreviewActivity">
+    android:background="#000"
+    android:keepScreenOn="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.acostadev.acostademo.ui.livepreview.vision.CameraSourcePreview
+        android:id="@+id/firePreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <com.acostadev.acostademo.ui.livepreview.vision.GraphicOverlay
+            android:id="@+id/fireFaceOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"/>
+    </com.acostadev.acostademo.ui.livepreview.vision.CameraSourcePreview>
+
+</RelativeLayout>
