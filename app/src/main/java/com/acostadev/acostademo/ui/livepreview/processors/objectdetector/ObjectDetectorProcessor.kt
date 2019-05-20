@@ -28,6 +28,7 @@ class ObjectDetectorProcessor(options: FirebaseVisionObjectDetectorOptions) :
             detector.close()
         } catch (e: IOException) {
             Log.e(TAG, "Exception thrown while trying to close object detector: $e")
+            e.printStackTrace()
         }
 
     }
@@ -56,6 +57,7 @@ class ObjectDetectorProcessor(options: FirebaseVisionObjectDetectorOptions) :
 
     override fun onFailure(e: Exception) {
         Log.e(TAG, "Object detection failed $e")
+        e.printStackTrace()
     }
 
     companion object {

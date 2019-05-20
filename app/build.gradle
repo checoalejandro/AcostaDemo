@@ -22,6 +22,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    aaptOptions {
+        noCompress "tflite"
+    }
     dataBinding {
         enabled = true
     }
@@ -30,12 +33,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
     implementation 'androidx.core:core-ktx:1.2.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
     implementation 'com.google.android.material:material:1.1.0-alpha06'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
-    implementation 'com.android.support:support-annotations:28.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0-alpha01'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01'
@@ -47,6 +50,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision:20.0.0'
     implementation 'com.google.firebase:firebase-ml-natural-language:19.0.0'
     implementation 'com.google.firebase:firebase-ml-natural-language-language-id-model:19.0.0'
+    implementation 'com.google.firebase:firebase-ml-vision-object-detection-model:16.0.0'
 
     // Firebase DB
     implementation 'com.google.firebase:firebase-database:17.0.0'

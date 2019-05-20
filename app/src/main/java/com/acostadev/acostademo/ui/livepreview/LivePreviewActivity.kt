@@ -1,25 +1,37 @@
 package com.acostadev.acostademo.ui.livepreview
 
+
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.hardware.Camera
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.acostadev.acostademo.R
 import com.acostadev.acostademo.ui.livepreview.processors.objectdetector.ObjectDetectorProcessor
 import com.acostadev.acostademo.ui.livepreview.vision.CameraSource
+import com.google.android.gms.common.annotation.KeepName
 import com.google.firebase.ml.common.FirebaseMLException
-import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetectorOptions
-import kotlinx.android.synthetic.main.activity_live_preview.*
 import java.io.IOException
-import java.lang.Exception
+import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetectorOptions
+import com.google.firebase.samples.apps.mlkit.kotlin.textrecognition.TextRecognitionProcessor
+import kotlinx.android.synthetic.main.activity_live_preview.*
 
+
+/** Demo app showing the various features of ML Kit for Firebase. This class is used to
+ * set up continuous frame processing on frames from a camera source.  */
+@KeepName
 class LivePreviewActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
     private var cameraSource: CameraSource? = null
-    private var selectedModel = FACE_CONTOUR
+
     private val requiredPermissions: Array<String?>
         get() {
             return try {
@@ -38,6 +50,8 @@ class LivePreviewActivity : AppCompatActivity(), ActivityCompat.OnRequestPermiss
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
+
         setContentView(R.layout.activity_live_preview)
 
         if (firePreview == null) {
@@ -49,78 +63,42 @@ class LivePreviewActivity : AppCompatActivity(), ActivityCompat.OnRequestPermiss
         }
 
         if (allPermissionsGranted()) {
-            createCameraSource(selectedModel)
+            createCameraSource()
         } else {
             getRuntimePermissions()
         }
     }
 
-    private fun createCameraSource(model: String) {
+    private fun createCameraSource() {
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = CameraSource(this, fireFaceOverlay)
         }
 
         try {
-//            when (model) {
-//                CLASSIFICATION_QUANT -> {
-//                    Log.i(TAG, "Using Custom Image Classifier (quant) Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(
-//                            CustomImageClassifierProcessor(
-//                                    this,
-//                                    true
-//                            )
-//                    )
-//                }
-//                CLASSIFICATION_FLOAT -> {
-//                    Log.i(TAG, "Using Custom Image Classifier (float) Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(
-//                            CustomImageClassifierProcessor(
-//                                    this,
-//                                    false
-//                            )
-//                    )
-//                }
-//                TEXT_DETECTION -> {
-//                    Log.i(TAG, "Using Text Detector Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(TextRecognitionProcessor())
-//                }
-//                FACE_DETECTION -> {
-//                    Log.i(TAG, "Using Face Detector Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(FaceDetectionProcessor(resources))
-//                }
-//                OBJECT_DETECTION -> {
+
+//            Log.i(TAG, "Using Text Detector Processor")
+//            cameraSource?.setMachineLearningFrameProcessor(TextRecognitionProcessor())
+
+
             Log.i(TAG, "Using Object Detector Processor")
             val objectDetectorOptions = FirebaseVisionObjectDetectorOptions.Builder()
                     .setDetectorMode(FirebaseVisionObjectDetectorOptions.STREAM_MODE)
-                    .enableClassification()
-                    .build()
+                    .enableClassification().build()
             cameraSource?.setMachineLearningFrameProcessor(
                     ObjectDetectorProcessor(objectDetectorOptions)
             )
-//                }
-//                AUTOML_IMAGE_LABELING -> {
-//                    cameraSource?.setMachineLearningFrameProcessor(AutoMLImageLabelerProcessor(this))
-//                }
-//                BARCODE_DETECTION -> {
-//                    Log.i(TAG, "Using Barcode Detector Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(BarcodeScanningProcessor())
-//                }
-//                IMAGE_LABEL_DETECTION -> {
-//                    Log.i(TAG, "Using Image Label Detector Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(ImageLabelingProcessor())
-//                }
-//                FACE_CONTOUR -> {
-//                    Log.i(TAG, "Using Face Contour Detector Processor")
-//                    cameraSource?.setMachineLearningFrameProcessor(FaceContourDetectorProcessor())
-//                }
-//                else -> Log.e(TAG, "Unknown model: $model")
-//            }
+
         } catch (e: FirebaseMLException) {
-            Log.e(TAG, "can not create camera source: $model")
+            Log.e(TAG, "can not create camera source")
         }
     }
 
+    /**
+     * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
+     * (e.g., because onResume was called before the camera source was created), this will be called
+     * again when the camera source is created.
+     */
     private fun startCameraSource() {
         cameraSource?.let {
             try {
@@ -130,7 +108,7 @@ class LivePreviewActivity : AppCompatActivity(), ActivityCompat.OnRequestPermiss
                 if (fireFaceOverlay == null) {
                     Log.d(TAG, "resume: graphOverlay is null")
                 }
-                firePreview?.start(cameraSource!!, fireFaceOverlay)
+                firePreview?.start(it, fireFaceOverlay)
             } catch (e: IOException) {
                 Log.e(TAG, "Unable to start camera source.", e)
                 cameraSource?.release()
@@ -187,7 +165,7 @@ class LivePreviewActivity : AppCompatActivity(), ActivityCompat.OnRequestPermiss
     ) {
         Log.i(TAG, "Permission granted!")
         if (allPermissionsGranted()) {
-            createCameraSource(selectedModel)
+            createCameraSource()
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
